@@ -2,7 +2,9 @@
   <div id="app">
     <app-navbar
       :login="login"
-      :sign-up="signUp">    
+      :sign-up="signUp"
+      :is-logged-in="isLoggedIn"
+      :logout="logout">    
     </app-navbar>  
     <router-view></router-view>
   </div>
@@ -25,12 +27,23 @@ export default {
       currentUser: null,
     }
   },
+  computed: {
+    isLoggedIn() {
+      return this.currentUser ? true : false;
+    }
+  },   
   methods: {
     login(email, password) {
-      this.currentUser = this.firebase.users.find(user => user.email == email && user.password == password
-      );  
+      this.currentUser = this.users.find(user => user.email == email && user.password == password
+      );
+    },
+    logout() {
+      this.currentUser = null;
     },
     signUp(email, password) {
+      if (this.users.find(user => user.email == email)) {
+        return alert('The e-mail has already been taken!');
+      }
       this.$firebaseRefs.users.push({
         email,
         password,

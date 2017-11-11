@@ -1,9 +1,10 @@
 <template lang="html">
   <section>
-    <form action="">
+  <b-modal :active.sync="isLoginOpen" :onCancel="closeLoginModal" has-modal-card>
+    <form>
       <div class="modal-card">
         <header class="modal-card-head">
-          <p class="modal-card-title">Login</p>
+          <p class="modal-card-title">Login / Signup</p>
         </header>
         <section class="modal-card-body">
           <b-field label="Email">
@@ -14,15 +15,16 @@
             <b-input type="password" v-model="password" password-reveal placeholder="Your password" required>
             </b-input>
           </b-field>
-          <b-checkbox>{{ isLogin ? 'Make Signup' : 'Make Login' }}</b-checkbox>
+          <b-checkbox v-model="isSignUp">Make Sign up</b-checkbox>
         </section>
         <footer class="modal-card-foot">
           <button class="button" type="button" @click="closeLoginModal">Close</button>
-          <button class="button is-primary" v-if="isLogin" @click="loginLocal">Login</button>
-          <button class="button is-primary" v-else @click="signUpLocal">Sign Up</button>
+          <button type="button" class="button is-primary" v-if="!isSignUp" @click="loginLocal">Login</button>
+          <button type="button" class="button is-primary" v-else @click="signUpLocal">Sign Up</button>
         </footer>
       </div>
     </form>
+    </b-modal>
   </section>
 </template>
 
@@ -56,15 +58,17 @@ export default {
   },
   data() {
     return {
-      isLogin: true,
+      isSignUp: false,
     }
   },
   methods: {
     loginLocal() {
       this.login(this.email, this.password);
+      this.closeLoginModal();
     },
     signUpLocal() {
       this.signUp(this.email, this.password);
+      this.closeLoginModal();
     },
   }
 }
