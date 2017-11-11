@@ -29,7 +29,7 @@
       <div class="navbar-end">
         <div class="navbar-item">
           <div class="field is-grouped">
-            <button class="button is-primary">Login</button>
+            <button class="button is-primary" @click="isLoginOpen = true">Login</button>
           </div>
         </div>
       </div>
@@ -38,10 +38,34 @@
 </template>
 
 <script>
+import Login from './Login.vue';
+
 export default {
-  // data() {
-    
-  // }
+  components: {
+    'app-login': Login,
+  },
+  data() {
+    return {
+      isLoginOpen: false,
+      email: '',
+      password: '',
+    }
+  },
+  props: {
+    login: {
+      type: Function,
+      required: true,
+    },
+    signUp: {
+      type: Function,
+      required: true,
+    },
+  },
+  methods: {
+    closeLoginModal() {
+      this.isLoginOpen = false;
+    },
+  },
 }
 </script>
 

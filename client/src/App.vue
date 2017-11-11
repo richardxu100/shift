@@ -1,6 +1,9 @@
 <template>
   <div id="app">
-    <app-navbar></app-navbar>  
+    <app-navbar
+      :login="login"
+      :sign-up="signUp">    
+    </app-navbar>  
     <router-view></router-view>
   </div>
 </template>
@@ -16,6 +19,23 @@ export default {
   },
   firebase: {
     users: db.ref('users')
+  },
+  data() {
+    return {
+      currentUser: null,
+    }
+  },
+  methods: {
+    login(email, password) {
+      this.currentUser = this.firebase.users.find(user => user.email == email && user.password == password
+      );  
+    },
+    signUp(email, password) {
+      this.$firebaseRefs.users.push({
+        email,
+        password,
+      });
+    }
   }
 }
 </script>
