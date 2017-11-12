@@ -4,6 +4,9 @@
       :login="login"
       :sign-up="signUp"
       :is-logged-in="isLoggedIn"
+      :close-login-modal="closeLoginModal"
+      :open-login-modal="openLoginModal"
+      :is-login-modal-open="isLoginModalOpen"
       :logout="logout">    
     </app-navbar>  
     <router-view></router-view>
@@ -20,11 +23,13 @@ export default {
     'app-navbar': Navbar,
   },
   firebase: {
-    users: db.ref('users')
+    users: db.ref('users'),
+    loggedInUsers: db.ref('loggedInUsers'),
   },
   data() {
     return {
       currentUser: null,
+      isLoginModalOpen: false,
     }
   },
   computed: {
@@ -33,11 +38,32 @@ export default {
     }
   },   
   methods: {
+    closeLoginModal() {
+      this.isLoginModalOpen = false;
+    },
+    openLoginModal() {
+      this.isLoginModalOpen = true;
+    },
     login(email, password) {
+      if (!this.users.find(user => user.email == email)) {
+        return alert('A user with that e-mail wasnt found');
+      }
+
+      if (!this.loggedInUsers.find(user => user.email == email)) { // this doesn't really work
+        this.$firebaseRefs.loggedInUsers.push({ email });
+      }
+
+      this.isLoginModalOpen = false;
+      
       this.currentUser = this.users.find(user => user.email == email && user.password == password
       );
     },
     logout() {
+      this.loggedInUsers = this.loggedInUsers.filter(user => user.email !== this.currentUser.email);
+
+      this.$firebaseRefs.loggedInUsers.child(
+        this.currentUser['.key']).remove();
+
       this.currentUser = null;
     },
     signUp(email, password) {
@@ -48,6 +74,7 @@ export default {
         email,
         password,
       });
+      this.login(email, password);
     }
   }
 }

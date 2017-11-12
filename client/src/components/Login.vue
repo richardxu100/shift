@@ -1,6 +1,6 @@
 <template lang="html">
   <section>
-  <b-modal :active.sync="isLoginOpen" :onCancel="closeLoginModal" has-modal-card>
+  <b-modal :active.sync="isLoginModalOpen" :onCancel="closeLoginModal" has-modal-card>
     <form>
       <div class="modal-card">
         <header class="modal-card-head">
@@ -31,7 +31,7 @@
 <script>
 export default {
   props: {
-    isLoginOpen: {
+    isLoginModalOpen: {
       type: Boolean,
       required: true,
     },
@@ -64,11 +64,11 @@ export default {
   methods: {
     loginLocal() {
       this.login(this.email, this.password);
-      this.closeLoginModal();
+      // this.closeLoginModal();
     },
     signUpLocal() {
       this.signUp(this.email, this.password);
-      this.closeLoginModal();
+      // this.closeLoginModal();
     },
   }
 }

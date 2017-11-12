@@ -2,9 +2,9 @@
   <div>
     <nav class="navbar is-dark">
       <div class="navbar-brand">
-        <a class="navbar-item" href="https://bulma.io">
+        <router-link class="navbar-item" to="/">
           <b>SHIFT</b>
-        </a>
+        </router-link>
         <div class="navbar-burger burger">
           <span></span>
           <span></span>
@@ -21,6 +21,9 @@
               <a class="navbar-item" href="/documentation/overview/start/">
                   Leaderboard
                 </a>
+                <a class="navbar-item" href="/documentation/overview/start/">
+                  Article Breakdowns
+                </a>
               <a class="navbar-item" href="https://bulma.io/documentation/modifiers/syntax/">
                   About
                 </a>
@@ -28,14 +31,14 @@
           </div>
         </div>
         
-        <div class="navbar-middle">
-          <b>Today's Topic: Automation!</b>
-        </div>
+        <!-- <div class="navbar-middle">
+          <b>Today's Topic: Minimum Wage Laws</b>
+        </div> -->
 
         <div class="navbar-end">
           <div class="navbar-item" v-if="!isLoggedIn">
             <div class="field is-grouped">
-              <button class="button is-primary" @click="isLoginOpen = true">Login</button>
+              <button class="button is-primary" @click="openLoginModal">Login</button>
             </div>
           </div>
 
@@ -62,7 +65,7 @@
       :sign-up="signUp"
       :email="email"
       :password="password"
-      :is-login-open="isLoginOpen"
+      :is-login-modal-open="isLoginModalOpen"
       :close-login-modal="closeLoginModal">    
     </app-login>
   </div>
@@ -77,13 +80,16 @@ export default {
   },
   data() {
     return {
-      isLoginOpen: false,
       email: '',
       password: '',
     }
   },
   props: {
     isLoggedIn: {
+      type: Boolean,
+      required: true,
+    },
+    isLoginModalOpen: {
       type: Boolean,
       required: true,
     },
@@ -99,18 +105,21 @@ export default {
       type: Function,
       required: true,
     },
-  },
-  methods: {
-    closeLoginModal() {
-      this.isLoginOpen = false;
+    closeLoginModal: {
+      type: Function,
+      required: true,
     },
+    openLoginModal: {
+      type: Function,
+      required: true,
+    }
   },
 }
 </script>
 
 <style lang="scss">
-.navbar-middle {
-  display: flex;
-  align-items: center;
-}
+// .navbar-middle {
+//   display: flex;
+//   align-items: center;
+// }
 </style>
