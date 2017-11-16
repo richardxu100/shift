@@ -5,10 +5,10 @@
         <h2 class="title">Articles</h2>
         <ul>
           <li><a target="_blank" href="https://www.economist.com/news/finance-and-economics/21724802-two-studies-their-impact-seattle-reach-opposite-conclusions-economists-argue">Economist</a></li>
-          <li><a href="google.com">Reuters</a></li>
-          <li><a href="google.com">The Associated Press</a></li>
-          <li><a href="google.com">Reuters</a></li>
-          <li><a href="google.com">The Guardian</a></li>
+          <li><a target="_blank" href="http://articles.chicagotribune.com/2014-03-17/business/ct-biz-0317-work-advice-huppke-20140317_1_minimum-wage-income-inequality-increase">Chicago Tribune</a></li>
+          <li><a target="_blank" href="https://www.dol.gov/whd/minwage/america.htm">The Department of Labor</a></li>
+          <li><a target="_blank" href="https://ballotpedia.org/Minimum_wage_reports_and_analyses">Ballotpedia</a></li>
+          <li><a target="_blank" href="https://minimum-wage.procon.org/">ProCon.org</a></li>
         </ul>
 
 
