@@ -5,28 +5,31 @@
         <router-link class="navbar-item" to="/">
           <b>SHIFT</b>
         </router-link>
-        <div class="navbar-burger burger">
+        <div class="navbar-burger burger" @click="isNavActive = !isNavActive">
           <span></span>
           <span></span>
           <span></span>
         </div>
       </div>
-      <div class="navbar-menu">
+      <div class="navbar-menu" :class="{'is-active': isNavActive}">
         <div class="navbar-start">
           <div class="navbar-item has-dropdown is-hoverable">
             <a class="navbar-link" href="/documentation/overview/start/">
                 Menu
               </a>
             <div class="navbar-dropdown">
-              <a class="navbar-item" href="/documentation/overview/start/">
+              <router-link class="navbar-item" to="/leaderboard">
                   Leaderboard
-                </a>
-                <a class="navbar-item" href="/documentation/overview/start/">
+                </router-link>
+                <router-link class="navbar-item" to="/chat">
+                  Join a Conversation
+                </router-link>
+                <router-link class="navbar-item" to="/articles">
                   Article Breakdowns
-                </a>
-              <a class="navbar-item" href="https://bulma.io/documentation/modifiers/syntax/">
+                </router-link>
+              <router-link class="navbar-item" to="/about">
                   About
-                </a>
+                </router-link>
             </div>
           </div>
         </div>
@@ -47,9 +50,7 @@
                 Account
               </a>
             <div class="navbar-dropdown is-right">
-              <a class="navbar-item" href="/documentation/overview/start/">
-                Set Preferences
-              </a>
+              <router-link class="navbar-item" to="/setPreferences">Set Preferences</router-link> 
               <hr class="navbar-divider">
               <a class="navbar-item" @click="logout">
                 Logout
@@ -82,6 +83,7 @@ export default {
     return {
       email: '',
       password: '',
+      isNavActive: false,
     }
   },
   props: {

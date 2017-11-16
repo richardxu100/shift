@@ -4,16 +4,16 @@
       <div class="column is-one-quarter">
         <h2 class="title">Articles</h2>
         <ul>
-          <li><a href="google.com">Google</a></li>
-          <li><a href="google.com">Google</a></li>
-          <li><a href="google.com">Google</a></li>
-          <li><a href="google.com">Google</a></li>
-          <li><a href="google.com">Google</a></li>
+          <li><a target="_blank" href="https://www.economist.com/news/finance-and-economics/21724802-two-studies-their-impact-seattle-reach-opposite-conclusions-economists-argue">Economist</a></li>
+          <li><a href="google.com">Reuters</a></li>
+          <li><a href="google.com">The Associated Press</a></li>
+          <li><a href="google.com">Reuters</a></li>
+          <li><a href="google.com">The Guardian</a></li>
         </ul>
 
 
         <h2 class="title" id="chatPartner">Chat Partner</h2>
-        <p><b>Name:</b> {{ !chatPartner ? 'loading' : chatPartner.name }} </p>
+        <p><b>Name:</b> Person Name </p>
         
         <div v-if="chatPartner">
           <button class="button is-primary" @click="isChatStarted = true" v-if="!isChatStarted ">Start Chat</button>
@@ -28,28 +28,70 @@
 
         <p class="has-text-centered">Go to this link: <a target="_blank" href="http://stin.to/3u8w8" v-if="isChatStarted">http://stin.to/3u8w8</a>!
         </p>
+
+        <ul v-if="isChatDone">
+          <li>How open was your chat mate to new ideas?</li>
+          <b-input placeholder="Number"
+            type="number"
+            min="0"
+            max="5">
+          </b-input>
+
+          <li>How well did your chat mate explain their point of view?</li>
+          <b-input placeholder="Number"
+            type="number"
+            min="0"
+            max="5">
+          </b-input>
+
+          <li>How open would you be to discussing with this chat mate again?</li>
+          <b-input placeholder="Number"
+            type="number"
+            min="0"
+            max="5">
+          </b-input>
+        <button class="button is-primary" @click="saveAnswers">Save answers</button>
+        </ul>
+
       </div>
     </div>
   </section>
 </template>
 
 <script>
+import { db } from '../utils/firebase';
+
 export default {
   data() {
     return {
-      time: 360,
+      time: 15,
       isChatStarted: false,
-      chatPartner: null,
+      isChatDone: false,
+      chatPartner: 'Richard',
     }
   },
   watch: {
     isChatStarted() {
-      setInterval(() => this.time = this.time - 1, 1000);
+      setInterval(() => {
+        if (this.time >= 1) {
+          this.time = this.time - 1
+        }
+      }, 1000);
+      setTimeout(() => this.isChatDone = true, 15000);
+    },
+    lgUsers() {
+      console.log('Hey, a new user was added!');
     }
   },
   methods: {
     addTime(numOfSeconds) {
       this.time += numOfSeconds;
+    },
+    saveAnswers() {
+      this.$toast.open({
+        message: 'Thanks for saving your answers',
+        type: 'is-success',
+      });
     }
   }
 }  

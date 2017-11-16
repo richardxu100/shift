@@ -75,6 +75,7 @@ export default {
         password,
       });
       this.login(email, password);
+      this.$router.push('/setPreferences');
     }
   }
 }

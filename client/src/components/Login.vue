@@ -64,11 +64,9 @@ export default {
   methods: {
     loginLocal() {
       this.login(this.email, this.password);
-      // this.closeLoginModal();
     },
     signUpLocal() {
       this.signUp(this.email, this.password);
-      // this.closeLoginModal();
     },
   }
 }

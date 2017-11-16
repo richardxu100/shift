@@ -3,7 +3,7 @@
     <div class="hero-body">
       <div class="container has-text-centered">
         <h1 class="title">
-          <span>Today's Topic:</span> Tax Reform
+          <span>Today's Topic:</span> The Minimum Wage
         </h1>
         <h2 class="subtitle">
           <button class="button is-light" @click="$router.push('/chat')">Join a Conversation</button>
