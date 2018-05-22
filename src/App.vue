@@ -55,14 +55,16 @@ export default {
 
       this.isLoginModalOpen = false;
       
-      this.currentUser = this.users.find(user => user.email == email && user.password == password
+      this.currentUser = this.users.find(
+        user => user.email == email && user.password == password
       );
     },
     logout() {
-      this.loggedInUsers = this.loggedInUsers.filter(user => user.email !== this.currentUser.email);
+      this.loggedInUsers = 
+        this.loggedInUsers.filter(user => user.email !== this.currentUser.email);
 
-      this.$firebaseRefs.loggedInUsers.child(
-        this.currentUser['.key']).remove();
+      this.$firebaseRefs.loggedInUsers
+        .child(this.currentUser['.key']).remove();
 
       this.currentUser = null;
     },

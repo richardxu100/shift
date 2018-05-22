@@ -3,10 +3,10 @@
     <div class="hero-body">
       <div class="container has-text-centered">
         <h1 class="title">
-          <span>Today's Topic:</span> The Minimum Wage
+          <span>Battle Political Polarization</span> 
         </h1>
         <h2 class="subtitle">
-          <button class="button is-light" @click="$router.push('/chat')">Join a Conversation</button>
+          <button class="button is-info" @click="$router.push('/chat')">Join a Conversation</button>
         </h2>
       </div>
     </div>

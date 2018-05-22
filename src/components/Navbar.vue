@@ -14,7 +14,7 @@
       <div class="navbar-menu" :class="{'is-active': isNavActive}">
         <div class="navbar-start">
           <div class="navbar-item has-dropdown is-hoverable">
-            <a class="navbar-link" href="/documentation/overview/start/">
+            <a class="navbar-link" href="/">
                 Menu
               </a>
             <div class="navbar-dropdown">
@@ -46,7 +46,7 @@
           </div>
 
           <div class="navbar-item has-dropdown is-hoverable" v-else>
-            <a class="navbar-link" href="/documentation/overview/start/">
+            <a class="navbar-link" href="/">
                 Account
               </a>
             <div class="navbar-dropdown is-right">
