@@ -1,6 +1,6 @@
 # SHIFT
 
-> Battle Political Polarization
+> MLH Code Day 2017
 
 ![Screen Shot 2018-05-22 at 7.21.11 PM](https://i.imgur.com/YxlJpp4.jpg)
 
