@@ -29,7 +29,14 @@ export default {
   },
   data() {
     return {
-      currentUser: null,
+      currentUser: {
+        name: 'rich2',
+        email: 'test41@test.com',
+      },
+      // currentUser: {
+      //   name: 'rich2',
+      //   email: 'test51@test.com',
+      // },
       isLoginModalOpen: false,
     }
   },
@@ -71,7 +78,7 @@ export default {
       this.$firebaseRefs.loggedInUsers.child(this.currentUser['.key']).remove()
       this.currentUser = null
     },
-    async signUp({ email, password, firstName }) {
+    async signUp({ email, password, name }) {
       if (this.users.find(user => user.email == email)) {
         return this.$toast.open({
           type: 'is-danger',
@@ -82,7 +89,7 @@ export default {
         await firebase.auth().createUserWithEmailAndPassword(email, password)
         this.$firebaseRefs.users.push({
           email,
-          firstName,
+          name,
         })
         this.currentUser = this.users.find(user => user.email === email)
         this.isLoginModalOpen = false

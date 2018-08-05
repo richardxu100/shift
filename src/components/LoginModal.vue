@@ -8,7 +8,7 @@
         </header>
         <section class="modal-card-body">
           <b-field label="First Name" v-if="isSignUp">
-            <b-input type="text" v-model="firstName" placeholder="First Name" required>
+            <b-input type="text" v-model="name" placeholder="First Name" required>
             </b-input>
           </b-field>
           <b-field label="Email">
@@ -56,8 +56,8 @@ export default {
   },
   data() {
     return {
-      isSignUp: true,
-      firstName: '',
+      isSignUp: false,
+      name: '',
       email: '',
       password: '',
     }
@@ -70,7 +70,7 @@ export default {
       this.signUp({
         email: this.email,
         password: this.password,
-        firstName: this.firstName,
+        name: this.name,
       })
     },
   },

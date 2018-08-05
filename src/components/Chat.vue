@@ -17,9 +17,9 @@
         <div v-if="chatPartner">
           <button 
             class="button is-primary" 
-            @click="isChatStarted = true" 
+            @click="joinChat" 
             :disabled="!currentUser"
-            v-if="!isChatStarted ">Start Chat</button>
+            v-if="!isChatStarted ">Join Chat</button>
           <button 
             class="button is-info" 
             v-else 
@@ -72,10 +72,12 @@ export default {
     },
   },
   firebase: {
-    chats: db.ref('chats'),
+    chats: db.ref('chats'), // make this watch on value change!
   },
   created() {
-    console.log('this.chats: ', this.chats)
+    db.ref('chats').on('value', snapshot => {
+      console.log('snapshot: ', snapshot.val())
+    })
   },
   data() {
     return {
@@ -97,9 +99,6 @@ export default {
       }, 1000)
       setTimeout(() => (this.isChatDone = true), 150000)
     },
-    lgUsers() {
-      console.log('Hey, a new user was added!')
-    },
   },
   methods: {
     addTime(numOfSeconds) {
@@ -110,6 +109,27 @@ export default {
         message: 'Thanks for saving your answers',
         type: 'is-success',
       })
+    },
+    joinChat() {
+      console.log('chats: ', this.chats)
+      this.isChatStarted = true
+      if (
+        this.chats.length === 0 ||
+        this.chats[this.chats.length - 1].length === 2 // might not work
+      ) {
+        this.$firebaseRefs.chats.push([this.currentUser.name])
+      } else {
+        const item = this.chats[this.chats.length - 1]
+        const copy = Object.assign({}, item)
+        delete copy['.key']
+        this.$firebaseRefs.chats
+          .child(item['.key'])
+          .set(
+            this.chats[this.chats.length - 1]['.value'].concat(
+              this.currentUser.name
+            )
+          )
+      }
     },
   },
 }
