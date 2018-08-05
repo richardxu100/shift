@@ -14,13 +14,11 @@
 </template>
 
 <script>
-export default {
-
-}  
+export default {}
 </script>
 
-<style lang="scss" scoped>
-  h1.title {
-    margin-bottom: 2.5rem;
-  }
+<style scoped>
+h1.title {
+  margin-bottom: 2.5rem;
+}
 </style>

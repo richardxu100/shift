@@ -94,7 +94,7 @@ export default {
 }
 </script>
 
-<style scoped lang="scss">
+<style scoped>
 li {
   margin-top: 10px;
 }

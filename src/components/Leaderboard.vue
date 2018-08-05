@@ -37,19 +37,16 @@
 </template>
 
 <script>
-import winnersData from '../utils/winnersData';
+import winnersData from '../utils/winnersData'
 
 export default {
   data() {
     return {
       winners: winnersData,
     }
-  } 
+  },
 }
 </script>
 
-<style lang="scss">
-// table {
-//   max-width: 600px;
-// }
+<style>
 </style>

@@ -97,13 +97,13 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
+<style scoped>
 #chatPartner {
   margin-top: 20px;
+}
 
-  p {
-    margin-bottom: 20px;
-  }
+#chatPartner > p {
+  margin-bottom: 20px;
 }
 
 h2.title {
@@ -112,18 +112,12 @@ h2.title {
 
 .columns {
   padding: 2em;
-  // padding-top: 0px;
+  padding-top: 0px;
 }
 
 li {
   margin-top: 10px;
 }
-
-// input {
-//   position: fixed !important;
-//   width: 100%;
-//   bottom: 0;
-// }
 
 .vl {
   border-left: 2px solid black;
