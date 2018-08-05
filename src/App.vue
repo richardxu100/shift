@@ -53,9 +53,7 @@ export default {
       //   this.$firebaseRefs.loggedInUsers.push({ email })
       // }
       this.isLoginModalOpen = false
-      this.currentUser = this.users.find(
-        user => user.email == email && user.password == password
-      )
+      this.currentUser = this.users.find(user => user.email == email)
     },
     logout() {
       this.loggedInUsers = this.loggedInUsers.filter(
@@ -64,13 +62,13 @@ export default {
       this.$firebaseRefs.loggedInUsers.child(this.currentUser['.key']).remove()
       this.currentUser = null
     },
-    signUp(email, password) {
+    signUp({ email, password, firstName }) {
       if (this.users.find(user => user.email == email)) {
         return alert('The e-mail has already been taken!')
       }
       this.$firebaseRefs.users.push({
         email,
-        password,
+        firstName,
       })
       this.login(email, password)
       this.$router.push('/setPreferences')

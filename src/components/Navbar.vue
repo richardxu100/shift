@@ -64,8 +64,6 @@
     <app-login-modal 
       :login="login"
       :sign-up="signUp"
-      :email="email"
-      :password="password"
       :is-login-modal-open="isLoginModalOpen"
       :close-login-modal="closeLoginModal">    
     </app-login-modal>
@@ -81,8 +79,6 @@ export default {
   },
   data() {
     return {
-      email: '',
-      password: '',
       isNavActive: false,
     }
   },
