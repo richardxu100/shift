@@ -15,9 +15,15 @@
         <p><b>Name:</b> Person Name </p>
         
         <div v-if="chatPartner">
-          <button class="button is-primary" @click="isChatStarted = true" v-if="!isChatStarted ">Start Chat</button>
-
-          <button class="button is-info" v-else @click="addTime(120)">Add 2:00</button>
+          <button 
+            class="button is-primary" 
+            @click="isChatStarted = true" 
+            :disabled="!currentUser"
+            v-if="!isChatStarted ">Start Chat</button>
+          <button 
+            class="button is-info" 
+            v-else 
+            @click="addTime(120)">Add 2:00</button>
         </div>
       </div>
 
@@ -61,6 +67,11 @@
 import { db } from '../utils/firebase'
 
 export default {
+  props: {
+    currentUser: {
+      required: true,
+    },
+  },
   created() {},
   data() {
     return {

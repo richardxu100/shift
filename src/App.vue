@@ -9,7 +9,7 @@
       :is-login-modal-open="isLoginModalOpen"
       :logout="logout">    
     </app-navbar>  
-    <router-view></router-view>
+    <router-view :current-user="currentUser"></router-view>
   </div>
 </template>
 
@@ -58,7 +58,6 @@ export default {
           this.currentUser = this.users.find(user => user.email == email)
         })
         .catch(error => {
-          // Handle Errors here.
           this.$toast.open({
             type: 'is-danger',
             message: `Error: ${error.message}`,
