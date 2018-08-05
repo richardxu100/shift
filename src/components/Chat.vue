@@ -12,7 +12,7 @@
         </ul>
 
         <h2 class="title" id="chatPartner">Chat Partner</h2>
-        <p><b>Name:</b> Person Name </p>
+        <p><b>Name:</b> N/A </p>
         
         <div v-if="chatPartner">
           <button 
@@ -29,10 +29,9 @@
 
       <div class="vl"></div>
       <div class="column"> 
-        <h3 class="title has-text-centered">Timer: {{ time }} seconds</h3>
-
-        <p class="has-text-centered">Go to this link: <a target="_blank" href="http://stin.to/3u8w8" v-if="isChatStarted">http://stin.to/3u8w8</a>!
-        </p>
+        <h3 class="title has-text-centered">
+          {{ isChatStarted ? `Waiting for partner ${waitingDots}` : 'Join a chat!' }}
+        </h3>
 
         <ul v-if="isChatDone">
           <li>How open was your chat mate to new ideas?</li>
@@ -72,23 +71,31 @@ export default {
       required: true,
     },
   },
-  created() {},
+  firebase: {
+    chats: db.ref('chats'),
+  },
+  created() {
+    console.log('this.chats: ', this.chats)
+  },
   data() {
     return {
       time: 15,
       isChatStarted: false,
       isChatDone: false,
       chatPartner: 'Richard',
+      waitingDots: '',
     }
   },
   watch: {
     isChatStarted() {
       setInterval(() => {
-        if (this.time >= 1) {
-          this.time = this.time - 1
+        if (this.waitingDots.length < 3) {
+          this.waitingDots += '.'
+        } else {
+          this.waitingDots = ''
         }
       }, 1000)
-      setTimeout(() => (this.isChatDone = true), 15000)
+      setTimeout(() => (this.isChatDone = true), 150000)
     },
     lgUsers() {
       console.log('Hey, a new user was added!')
