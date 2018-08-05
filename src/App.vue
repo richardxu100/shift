@@ -14,8 +14,8 @@
 </template>
 
 <script>
-import Navbar from './components/Navbar.vue';
-import { db } from './utils/firebase';
+import Navbar from './components/Navbar.vue'
+import { db } from './utils/firebase'
 
 export default {
   name: 'app',
@@ -34,55 +34,55 @@ export default {
   },
   computed: {
     isLoggedIn() {
-      return this.currentUser ? true : false;
-    }
-  },   
+      return this.currentUser ? true : false
+    },
+  },
   methods: {
     closeLoginModal() {
-      this.isLoginModalOpen = false;
+      this.isLoginModalOpen = false
     },
     openLoginModal() {
-      this.isLoginModalOpen = true;
+      this.isLoginModalOpen = true
     },
     login(email, password) {
       if (!this.users.find(user => user.email == email)) {
-        return alert('A user with that e-mail wasnt found');
+        return alert('A user with that e-mail wasnt found')
       }
 
-      if (!this.loggedInUsers.find(user => user.email == email)) { // this doesn't really work
-        this.$firebaseRefs.loggedInUsers.push({ email });
+      if (!this.loggedInUsers.find(user => user.email == email)) {
+        // this doesn't really work
+        this.$firebaseRefs.loggedInUsers.push({ email })
       }
 
-      this.isLoginModalOpen = false;
-      
+      this.isLoginModalOpen = false
+
       this.currentUser = this.users.find(
         user => user.email == email && user.password == password
-      );
+      )
     },
     logout() {
-      this.loggedInUsers = 
-        this.loggedInUsers.filter(user => user.email !== this.currentUser.email);
+      this.loggedInUsers = this.loggedInUsers.filter(
+        user => user.email !== this.currentUser.email
+      )
 
-      this.$firebaseRefs.loggedInUsers
-        .child(this.currentUser['.key']).remove();
+      this.$firebaseRefs.loggedInUsers.child(this.currentUser['.key']).remove()
 
-      this.currentUser = null;
+      this.currentUser = null
     },
     signUp(email, password) {
       if (this.users.find(user => user.email == email)) {
-        return alert('The e-mail has already been taken!');
+        return alert('The e-mail has already been taken!')
       }
       this.$firebaseRefs.users.push({
         email,
         password,
-      });
-      this.login(email, password);
-      this.$router.push('/setPreferences');
-    }
-  }
+      })
+      this.login(email, password)
+      this.$router.push('/setPreferences')
+    },
+  },
 }
 </script>
 
 <style lang="scss">
-
 </style>

@@ -59,7 +59,7 @@
 </template>
 
 <script>
-import { db } from '../utils/firebase';
+import { db } from '../utils/firebase'
 
 export default {
   data() {
@@ -76,62 +76,62 @@ export default {
         if (this.time >= 1) {
           this.time = this.time - 1
         }
-      }, 1000);
-      setTimeout(() => this.isChatDone = true, 15000);
+      }, 1000)
+      setTimeout(() => (this.isChatDone = true), 15000)
     },
     lgUsers() {
-      console.log('Hey, a new user was added!');
-    }
+      console.log('Hey, a new user was added!')
+    },
   },
   methods: {
     addTime(numOfSeconds) {
-      this.time += numOfSeconds;
+      this.time += numOfSeconds
     },
     saveAnswers() {
       this.$toast.open({
         message: 'Thanks for saving your answers',
         type: 'is-success',
-      });
-    }
-  }
-}  
+      })
+    },
+  },
+}
 </script>
 
 <style lang="scss" scoped>
-  #chatPartner {
-    margin-top: 20px;
+#chatPartner {
+  margin-top: 20px;
 
-    p {
-      margin-bottom: 20px;
-    }
+  p {
+    margin-bottom: 20px;
   }
+}
 
-  h2.title {
-    margin-bottom: 10px;
-  }
+h2.title {
+  margin-bottom: 10px;
+}
 
-  .columns {
-    padding: 2em;
-    // padding-top: 0px;
-  }
+.columns {
+  padding: 2em;
+  // padding-top: 0px;
+}
 
-  li {
-    margin-top: 10px;
-  }
+li {
+  margin-top: 10px;
+}
 
-  // input {
-  //   position: fixed !important;
-  //   width: 100%;
-  //   bottom: 0;
-  // }
+// input {
+//   position: fixed !important;
+//   width: 100%;
+//   bottom: 0;
+// }
 
-  .vl {
-    border-left: 2px solid black;
-    height: 100vh;
-    margin-top: -20px;
-  }
+.vl {
+  border-left: 2px solid black;
+  height: 100vh;
+  margin-top: -20px;
+}
 
-  button {
-    margin-top: 15px;
-  }
+button {
+  margin-top: 15px;
+}
 </style>

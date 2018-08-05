@@ -1,22 +1,22 @@
-import Vue from 'vue';
-import VueFire from 'vuefire';
-import Buefy from 'buefy';
-import VueRouter from 'vue-router';
+import Vue from 'vue'
+import VueFire from 'vuefire'
+import Buefy from 'buefy'
+import VueRouter from 'vue-router'
 
 import 'buefy/lib/buefy.css'
 
-import { routes } from './routes';
-import { db } from './utils/firebase';
-import App from './App.vue';
+import { routes } from './routes'
+import { db } from './utils/firebase'
+import App from './App.vue'
 
-Vue.use(Buefy);
-Vue.use(VueFire);
-Vue.use(VueRouter);
+Vue.use(Buefy)
+Vue.use(VueFire)
+Vue.use(VueRouter)
 
 const router = new VueRouter({
   mode: 'history',
-  routes
-});
+  routes,
+})
 
 new Vue({
   el: '#app',
@@ -33,7 +33,7 @@ new Vue({
       // optionally bind as an object
       asObject: true,
       // optionally provide the cancelCallback
-      cancelCallback: function () {}
-    }
-  }
-});
+      cancelCallback: function() {},
+    },
+  },
+})

@@ -63,15 +63,14 @@ export default {
   },
   methods: {
     loginLocal() {
-      this.login(this.email, this.password);
+      this.login(this.email, this.password)
     },
     signUpLocal() {
-      this.signUp(this.email, this.password);
+      this.signUp(this.email, this.password)
     },
-  }
+  },
 }
 </script>
 
 <style type="scss" scoped>
-  
 </style>

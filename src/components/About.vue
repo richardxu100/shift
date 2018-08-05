@@ -29,8 +29,6 @@
 </template>
 
 <script>
-  
-
 </script>
 
 <style>
@@ -40,5 +38,4 @@
 p {
   font-size: 16px;
 }
-
 </style>

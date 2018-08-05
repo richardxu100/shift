@@ -73,7 +73,7 @@
 </template>
 
 <script>
-import Login from './Login.vue';
+import Login from './Login.vue'
 
 export default {
   components: {
@@ -114,7 +114,7 @@ export default {
     openLoginModal: {
       type: Function,
       required: true,
-    }
+    },
   },
 }
 </script>

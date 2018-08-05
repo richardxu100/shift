@@ -69,7 +69,7 @@
 </template>
 
 <script>
-import { db } from '../utils/firebase';
+import { db } from '../utils/firebase'
 
 export default {
   data() {
@@ -87,13 +87,11 @@ export default {
   //   : db.ref('users'),
   // },
   methods: {
-
     // setPreferences() {
     //   db.ref('currentUser')
     // }
-  }
+  },
 }
-  
 </script>
 
 <style scoped lang="scss">
@@ -104,5 +102,4 @@ li {
 button {
   margin-top: 10px;
 }
-  
 </style>
