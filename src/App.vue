@@ -48,14 +48,11 @@ export default {
       if (!this.users.find(user => user.email == email)) {
         return alert('A user with that e-mail wasnt found')
       }
-
-      if (!this.loggedInUsers.find(user => user.email == email)) {
-        // this doesn't really work
-        this.$firebaseRefs.loggedInUsers.push({ email })
-      }
-
+      // if (!this.loggedInUsers.find(user => user.email == email)) {
+      //   // this doesn't really work
+      //   this.$firebaseRefs.loggedInUsers.push({ email })
+      // }
       this.isLoginModalOpen = false
-
       this.currentUser = this.users.find(
         user => user.email == email && user.password == password
       )
@@ -64,9 +61,7 @@ export default {
       this.loggedInUsers = this.loggedInUsers.filter(
         user => user.email !== this.currentUser.email
       )
-
       this.$firebaseRefs.loggedInUsers.child(this.currentUser['.key']).remove()
-
       this.currentUser = null
     },
     signUp(email, password) {

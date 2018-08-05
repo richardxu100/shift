@@ -4,7 +4,7 @@
     <form>
       <div class="modal-card">
         <header class="modal-card-head">
-          <p class="modal-card-title">Login / Signup</p>
+          <p class="modal-card-title">{{ !isSignUp ? 'Login' : 'Sign Up' }}</p>
         </header>
         <section class="modal-card-body">
           <b-field label="Email">
@@ -15,7 +15,9 @@
             <b-input type="password" v-model="password" password-reveal placeholder="Your password" required>
             </b-input>
           </b-field>
-          <b-checkbox v-model="isSignUp">Make Sign up</b-checkbox>
+          <b-checkbox v-model="isSignUp">
+            Make Sign Up
+          </b-checkbox>
         </section>
         <footer class="modal-card-foot">
           <button class="button" type="button" @click="closeLoginModal">Close</button>
@@ -58,7 +60,7 @@ export default {
   },
   data() {
     return {
-      isSignUp: false,
+      isSignUp: true,
     }
   },
   methods: {

@@ -62,6 +62,7 @@
 import { db } from '../utils/firebase'
 
 export default {
+  created() {},
   data() {
     return {
       time: 15,
@@ -98,6 +99,10 @@ export default {
 </script>
 
 <style scoped>
+section {
+  margin-top: 20px;
+}
+
 #chatPartner {
   margin-top: 20px;
 }

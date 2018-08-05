@@ -20,7 +20,7 @@
             <div class="navbar-dropdown">
               <router-link class="navbar-item" to="/leaderboard">
                   Leaderboard
-                </router-link>
+                 </router-link>
                 <router-link class="navbar-item" to="/chat">
                   Join a Conversation
                 </router-link>
@@ -61,23 +61,23 @@
         </div>
       </div>
     </nav>
-    <app-login 
+    <app-login-modal 
       :login="login"
       :sign-up="signUp"
       :email="email"
       :password="password"
       :is-login-modal-open="isLoginModalOpen"
       :close-login-modal="closeLoginModal">    
-    </app-login>
+    </app-login-modal>
   </div>
 </template>
 
 <script>
-import Login from './Login.vue'
+import LoginModal from './LoginModal.vue'
 
 export default {
   components: {
-    'app-login': Login,
+    'app-login-modal': LoginModal,
   },
   data() {
     return {
