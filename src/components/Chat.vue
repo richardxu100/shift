@@ -111,11 +111,10 @@ export default {
       })
     },
     joinChat() {
-      console.log('chats: ', this.chats)
       this.isChatStarted = true
       if (
         this.chats.length === 0 ||
-        this.chats[this.chats.length - 1].length === 2 // might not work
+        this.chats[this.chats.length - 1]['.value'].length === 2 // might not work
       ) {
         this.$firebaseRefs.chats.push([this.currentUser.name])
       } else {
