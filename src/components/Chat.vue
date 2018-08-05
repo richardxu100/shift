@@ -11,7 +11,6 @@
           <li><a target="_blank" href="https://minimum-wage.procon.org/">ProCon.org</a></li>
         </ul>
 
-
         <h2 class="title" id="chatPartner">Chat Partner</h2>
         <p><b>Name:</b> Person Name </p>
         

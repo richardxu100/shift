@@ -14,6 +14,7 @@
 </template>
 
 <script>
+import firebase from 'firebase'
 import Navbar from './components/Navbar.vue'
 import { db } from './utils/firebase'
 
@@ -45,15 +46,24 @@ export default {
       this.isLoginModalOpen = true
     },
     login(email, password) {
-      if (!this.users.find(user => user.email == email)) {
-        return alert('A user with that e-mail wasnt found')
-      }
-      // if (!this.loggedInUsers.find(user => user.email == email)) {
-      //   // this doesn't really work
-      //   this.$firebaseRefs.loggedInUsers.push({ email })
-      // }
-      this.isLoginModalOpen = false
-      this.currentUser = this.users.find(user => user.email == email)
+      firebase
+        .auth()
+        .signInWithEmailAndPassword(email, password)
+        .then(() => {
+          this.$toast.open({
+            type: 'is-success',
+            message: 'Logged in!',
+          })
+          this.isLoginModalOpen = false
+          this.currentUser = this.users.find(user => user.email == email)
+        })
+        .catch(error => {
+          // Handle Errors here.
+          this.$toast.open({
+            type: 'is-danger',
+            message: `Error: ${error.message}`,
+          })
+        })
     },
     logout() {
       this.loggedInUsers = this.loggedInUsers.filter(
@@ -62,16 +72,29 @@ export default {
       this.$firebaseRefs.loggedInUsers.child(this.currentUser['.key']).remove()
       this.currentUser = null
     },
-    signUp({ email, password, firstName }) {
+    async signUp({ email, password, firstName }) {
       if (this.users.find(user => user.email == email)) {
-        return alert('The e-mail has already been taken!')
+        return this.$toast.open({
+          type: 'is-danger',
+          message: 'The e-mail has already been taken!',
+        })
       }
-      this.$firebaseRefs.users.push({
-        email,
-        firstName,
-      })
-      this.login(email, password)
-      this.$router.push('/setPreferences')
+      try {
+        await firebase.auth().createUserWithEmailAndPassword(email, password)
+        this.$firebaseRefs.users.push({
+          email,
+          firstName,
+        })
+        this.currentUser = this.users.find(user => user.email === email)
+        this.isLoginModalOpen = false
+        this.$router.push('/setPreferences')
+      } catch (error) {
+        this.$toast.open({
+          type: 'is-danger',
+          message: `Error: ${error.message}`,
+        })
+        console.log('error: ', error)
+      }
     },
   },
 }
