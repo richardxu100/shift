@@ -111,23 +111,25 @@ export default {
       })
     },
     joinChat() {
+      console.log('this chats: ', this.chats)
       this.isChatStarted = true
       if (
         this.chats.length === 0 ||
-        this.chats[this.chats.length - 1]['.value'].length === 2 // might not work
+        this.chats[this.chats.length - 1].users.length === 2 // might not work
       ) {
-        this.$firebaseRefs.chats.push([this.currentUser.name])
+        this.$firebaseRefs.chats.push({
+          users: [this.currentUser.name],
+          // messages: ['hi'],
+        })
       } else {
         const item = this.chats[this.chats.length - 1]
         const copy = Object.assign({}, item)
         delete copy['.key']
-        this.$firebaseRefs.chats
-          .child(item['.key'])
-          .set(
-            this.chats[this.chats.length - 1]['.value'].concat(
-              this.currentUser.name
-            )
-          )
+        this.$firebaseRefs.chats.child(item['.key']).set({
+          users: this.chats[this.chats.length - 1].users.concat(
+            this.currentUser.name
+          ),
+        })
       }
     },
   },
