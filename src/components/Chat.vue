@@ -29,9 +29,13 @@
 
       <div class="vl"></div>
       <div class="column"> 
-        <h3 class="title has-text-centered">
-          {{ isSearching ? `Waiting for partner ${waitingDots}` : 'Join a chat!' }}
+        <h3 class="title has-text-centered" v-if="isSearching">
+          Waiting for partner {{ waitingDots }}
         </h3>
+        <h3 class="title has-text-centered" v-else-if="!isSearching && !isChatStarted">
+          Join Chat!
+        </h3>
+        
 
         <!-- <p>{{ }}</p> -->
 
@@ -85,11 +89,8 @@ export default {
   // },
   computed: {
     currentUsersLength() {
-      // console.log(this.chats.find(chat => chat['.key'] === this.currentChatKey))
       if (this.currentChatKey) {
-        return this.chats.find(
-          chat => chat['.key'] === this.currentChatKey
-        ).users.length
+        return this.chats.find(chat => chat['.key'] === this.currentChatKey).users.length
       } else {
         return 0
       }
@@ -120,8 +121,14 @@ export default {
     },
     currentUsersLength() {
       if (this.currentUsersLength === 2) {
-        this.isChatStarted = true
-        this.isSearching = false
+        setTimeout(() => {
+          this.$toast.open({
+            type: 'is-success',
+            message: 'Chat partner found!'
+          })
+          this.isChatStarted = true
+          this.isSearching = false
+        }, 1000)
       }
       console.log('currentUsersLength: ', this.currentUsersLength)
     }
@@ -138,7 +145,6 @@ export default {
     },
     joinChat() {
       this.isSearching = true
-      
       if (this.chats.length === 0 || this.chats[this.chats.length - 1].users.length === 2) {
         // Create a new chat object in firebase chats array
         const postRef = db.ref('chats').push({
