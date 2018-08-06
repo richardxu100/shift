@@ -36,7 +36,11 @@
           Join Chat!
         </h3>
         
-        <b-field id="chatBox" >
+        <div v-if="isChatStarted">
+          <!-- messages v-for  -->
+        </div>
+
+        <b-field id="chatBox" v-if="isChatStarted">
           <b-input id="chatInput" size="is-medium" placeholder="Type something!"></b-input>
         </b-field>
 
@@ -152,7 +156,12 @@ export default {
         // Create a new chat object in firebase chats array
         const postRef = db.ref('chats').push({
           users: [this.currentUser],
+          messages: [{
+            from: 'Admin',
+            text: 'Welcome to the chat!'
+          }]
         })
+        // const chatsRef = db.ref('chats').child(postRef.key).child('messages').push([])
         this.currentChatKey = postRef.key
       } else {
         // Add current user to the last chat
@@ -164,6 +173,10 @@ export default {
           users: chat.users.concat(
             this.currentUser
           ),
+          messages: [{
+            from: 'Admin',
+            text: 'Welcome to the chat!'
+          }]
         })
       }
     },
