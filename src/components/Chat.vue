@@ -28,7 +28,7 @@
       </div>
 
       <div class="vl"></div>
-      <div class="column"> 
+      <div class="chat column"> 
         <h3 class="title has-text-centered" v-if="isSearching">
           Waiting for partner {{ waitingDots }}
         </h3>
@@ -36,8 +36,9 @@
           Join Chat!
         </h3>
         
-
-        <!-- <p>{{ }}</p> -->
+        <b-field id="chatBox" >
+          <b-input id="chatInput" size="is-medium" placeholder="Type something!"></b-input>
+        </b-field>
 
         <ul v-if="isChatDone">
           <li>How open was your chat mate to new ideas?</li>
@@ -103,7 +104,7 @@ export default {
   },
   data() {
     return {
-      time: 60,
+      time: 600,
       isSearching: false,
       isChatStarted: false,
       isChatDone: false,
@@ -171,6 +172,20 @@ export default {
 </script>
 
 <style scoped>
+#chatInput {
+  border-radius: 0px;
+}
+
+.chat.column {
+  padding: 0px;
+}
+
+#chatBox {
+  bottom: 0;
+  width: 100%;
+  position: fixed;
+}
+
 section {
   margin-top: 20px;
 }
