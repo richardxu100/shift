@@ -126,20 +126,13 @@ export default {
     },
     currentUsersLength() {
       if (this.currentUsersLength === 2) {
-        setTimeout(() => {
-          this.$toast.open({
-            type: 'is-success',
-            message: 'Chat partner found!'
-          })
-          this.isChatStarted = true
-          this.isSearching = false
-        }, 1000)
+        this.$toast.open({
+          type: 'is-success',
+          message: 'Chat partner found!'
+        })
+        this.isChatStarted = true
+        this.isSearching = false
       }
-      // console.log('chats: ', this.chats.find(
-      //     chat => chat['.key'] === this.currentChatKey
-      //   ).users.find(
-      //     user => user.email !== this.currentUser.email
-      //   ))
     }
   },
   methods: {
