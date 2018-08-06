@@ -23,17 +23,17 @@ new Vue({
   router,
   render: h => h(App),
   firebase: {
-    // simple syntax, bind as an array by default
-    anArray: db.ref('/'),
-    // can also bind to a query
-    // anArray: db.ref('url/to/my/collection').limitToLast(25)
-    // full syntax
-    anObject: {
-      source: db.ref('/'),
-      // optionally bind as an object
-      asObject: true,
-      // optionally provide the cancelCallback
-      cancelCallback: function() {},
-    },
+    // // simple syntax, bind as an array by default
+    // anArray: db.ref('/'),
+    // // can also bind to a query
+    // // anArray: db.ref('url/to/my/collection').limitToLast(25)
+    // // full syntax
+    // anObject: {
+    //   source: db.ref('/'),
+    //   // optionally bind as an object
+    //   asObject: true,
+    //   // optionally provide the cancelCallback
+    //   cancelCallback: function() {},
+    // },
   },
 })

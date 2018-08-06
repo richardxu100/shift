@@ -14,7 +14,7 @@
         <h2 class="title" id="chatPartner">Chat Partner</h2>
         <p><b>Name:</b> N/A </p>
         
-        <div v-if="chatPartner">
+        <div>
           <button 
             class="button is-primary" 
             @click="joinChat" 
@@ -32,6 +32,8 @@
         <h3 class="title has-text-centered">
           {{ isChatStarted ? `Waiting for partner ${waitingDots}` : 'Join a chat!' }}
         </h3>
+
+        <!-- <p>{{ }}</p> -->
 
         <ul v-if="isChatDone">
           <li>How open was your chat mate to new ideas?</li>
@@ -79,13 +81,18 @@ export default {
       console.log('snapshot: ', snapshot.val())
     })
   },
+  computed: {
+    currentChat() {
+      return this.chats.find(chat => chat['.key'] === this.currentChatKey)
+    }
+  },
   data() {
     return {
       time: 15,
       isChatStarted: false,
       isChatDone: false,
-      chatPartner: 'Richard',
       waitingDots: '',
+      currentChatKey: null,
     }
   },
   watch: {
@@ -97,7 +104,7 @@ export default {
           this.waitingDots = ''
         }
       }, 1000)
-      setTimeout(() => (this.isChatDone = true), 150000)
+      setTimeout(() => (this.isChatDone = true), this.time * 1000)
     },
   },
   methods: {
@@ -112,21 +119,22 @@ export default {
     },
     joinChat() {
       console.log('this chats: ', this.chats)
-      this.isChatStarted = true
+      // this.isChatStarted = true
       if (
         this.chats.length === 0 ||
         this.chats[this.chats.length - 1].users.length === 2 // might not work
       ) {
-        this.$firebaseRefs.chats.push({
+        const postRef = this.$firebaseRefs.chats.push({
           users: [this.currentUser.name],
           // messages: ['hi'],
         })
+        this.currentChatKey = postRef.key
       } else {
-        const item = this.chats[this.chats.length - 1]
+        const item = this.currentChat
         const copy = Object.assign({}, item)
         delete copy['.key']
         this.$firebaseRefs.chats.child(item['.key']).set({
-          users: this.chats[this.chats.length - 1].users.concat(
+          users: this.currentChat.users.concat(
             this.currentUser.name
           ),
         })
