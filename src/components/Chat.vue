@@ -12,7 +12,7 @@
         </ul>
 
         <h2 class="title" id="chatPartner">Chat Partner</h2>
-        <p><b>Name:</b> N/A </p>
+        <p><b>Name:</b> {{ chatPartner.name }} </p>
         
         <div v-cloak>
           <button 
@@ -81,18 +81,23 @@ export default {
   firebase: {
     chats: db.ref('chats')
   },
-  // created() {
-  //   db.ref('chats').on('value', snapshot => {
-  //     console.log('snap val: ', snapshot.val())
-  //     this.chats = snapshot.val() ? snapshot.val() : []
-  //   })
-  // },
   computed: {
     currentUsersLength() {
       if (this.currentChatKey) {
         return this.chats.find(chat => chat['.key'] === this.currentChatKey).users.length
       } else {
         return 0
+      }
+    },
+    chatPartner() {
+      if (this.currentUsersLength === 2) {
+        return this.chats.find(
+          chat => chat['.key'] === this.currentChatKey
+        ).users.find(
+          user => user.email !== this.currentUser.email
+        )
+      } else {
+        return null
       }
     }
   },
@@ -130,7 +135,11 @@ export default {
           this.isSearching = false
         }, 1000)
       }
-      console.log('currentUsersLength: ', this.currentUsersLength)
+      // console.log('chats: ', this.chats.find(
+      //     chat => chat['.key'] === this.currentChatKey
+      //   ).users.find(
+      //     user => user.email !== this.currentUser.email
+      //   ))
     }
   },
   methods: {
@@ -148,7 +157,7 @@ export default {
       if (this.chats.length === 0 || this.chats[this.chats.length - 1].users.length === 2) {
         // Create a new chat object in firebase chats array
         const postRef = db.ref('chats').push({
-          users: [this.currentUser.name],
+          users: [this.currentUser],
         })
         this.currentChatKey = postRef.key
       } else {
@@ -159,7 +168,7 @@ export default {
         delete copy['.key']
         db.ref('chats').child(chat['.key']).set({
           users: chat.users.concat(
-            this.currentUser.name
+            this.currentUser
           ),
         })
       }

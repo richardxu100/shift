@@ -10,6 +10,7 @@
       :logout="logout">    
     </app-navbar>  
     <router-view :current-user="currentUser"></router-view>
+    <button @click="setDifferentUser" class="button is-success">Set Diff User</button>
   </div>
 </template>
 
@@ -46,6 +47,13 @@ export default {
     },
   },
   methods: {
+    // Testing purposes (new user for chat)
+    setDifferentUser() {
+      this.currentUser = {
+        name: 'not rich',
+        email: 'test123@test.com'
+      }
+    },
     closeLoginModal() {
       this.isLoginModalOpen = false
     },
