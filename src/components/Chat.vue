@@ -12,7 +12,7 @@
         </ul>
 
         <h2 class="title" id="chatPartner">Chat Partner</h2>
-        <p><b>Name:</b> {{ chatPartner.name }} </p>
+        <p><b>Name:</b> {{ chatPartner ? chatPartner.name : 'N/A' }} </p>
         
         <div v-cloak>
           <button 
@@ -103,7 +103,7 @@ export default {
   },
   data() {
     return {
-      time: 15,
+      time: 60,
       isSearching: false,
       isChatStarted: false,
       isChatDone: false,
