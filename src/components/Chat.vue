@@ -14,12 +14,12 @@
         <h2 class="title" id="chatPartner">Chat Partner</h2>
         <p><b>Name:</b> N/A </p>
         
-        <div>
+        <div v-cloak>
           <button 
             class="button is-primary" 
             @click="joinChat" 
             :disabled="!currentUser"
-            v-if="!isChatStarted ">Join Chat</button>
+            v-if="!isSearching ">Join Chat</button>
           <button 
             class="button is-info" 
             v-else 
@@ -30,7 +30,7 @@
       <div class="vl"></div>
       <div class="column"> 
         <h3 class="title has-text-centered">
-          {{ isChatStarted ? `Waiting for partner ${waitingDots}` : 'Join a chat!' }}
+          {{ isSearching ? `Waiting for partner ${waitingDots}` : 'Join a chat!' }}
         </h3>
 
         <!-- <p>{{ }}</p> -->
@@ -58,7 +58,7 @@
           </b-input>
         <button class="button is-primary" @click="saveAnswers">Save answers</button>
         </ul>
-
+        
       </div>
     </div>
   </section>
@@ -66,6 +66,7 @@
 
 <script>
 import { db } from '../utils/firebase'
+import firebase from 'firebase'
 
 export default {
   props: {
@@ -74,21 +75,30 @@ export default {
     },
   },
   firebase: {
-    chats: db.ref('chats'), // make this watch on value change!
+    chats: db.ref('chats')
   },
-  created() {
-    db.ref('chats').on('value', snapshot => {
-      console.log('snapshot: ', snapshot.val())
-    })
-  },
+  // created() {
+  //   db.ref('chats').on('value', snapshot => {
+  //     console.log('snap val: ', snapshot.val())
+  //     this.chats = snapshot.val() ? snapshot.val() : []
+  //   })
+  // },
   computed: {
-    currentChat() {
-      return this.chats.find(chat => chat['.key'] === this.currentChatKey)
+    currentUsersLength() {
+      // console.log(this.chats.find(chat => chat['.key'] === this.currentChatKey))
+      if (this.currentChatKey) {
+        return this.chats.find(
+          chat => chat['.key'] === this.currentChatKey
+        ).users.length
+      } else {
+        return 0
+      }
     }
   },
   data() {
     return {
       time: 15,
+      isSearching: false,
       isChatStarted: false,
       isChatDone: false,
       waitingDots: '',
@@ -97,6 +107,9 @@ export default {
   },
   watch: {
     isChatStarted() {
+      setTimeout(() => (this.isChatDone = true), this.time * 1000)
+    },
+    isSearching() {
       setInterval(() => {
         if (this.waitingDots.length < 3) {
           this.waitingDots += '.'
@@ -104,8 +117,14 @@ export default {
           this.waitingDots = ''
         }
       }, 1000)
-      setTimeout(() => (this.isChatDone = true), this.time * 1000)
     },
+    currentUsersLength() {
+      if (this.currentUsersLength === 2) {
+        this.isChatStarted = true
+        this.isSearching = false
+      }
+      console.log('currentUsersLength: ', this.currentUsersLength)
+    }
   },
   methods: {
     addTime(numOfSeconds) {
@@ -118,23 +137,22 @@ export default {
       })
     },
     joinChat() {
-      console.log('this chats: ', this.chats)
-      // this.isChatStarted = true
-      if (
-        this.chats.length === 0 ||
-        this.chats[this.chats.length - 1].users.length === 2 // might not work
-      ) {
-        const postRef = this.$firebaseRefs.chats.push({
+      this.isSearching = true
+      
+      if (this.chats.length === 0 || this.chats[this.chats.length - 1].users.length === 2) {
+        // Create a new chat object in firebase chats array
+        const postRef = db.ref('chats').push({
           users: [this.currentUser.name],
-          // messages: ['hi'],
         })
         this.currentChatKey = postRef.key
       } else {
-        const item = this.currentChat
-        const copy = Object.assign({}, item)
+        // Add current user to the last chat
+        const chat = this.chats[this.chats.length-1]
+        this.currentChatKey = chat['.key']
+        const copy = Object.assign({}, chat)
         delete copy['.key']
-        this.$firebaseRefs.chats.child(item['.key']).set({
-          users: this.currentChat.users.concat(
+        db.ref('chats').child(chat['.key']).set({
+          users: chat.users.concat(
             this.currentUser.name
           ),
         })
