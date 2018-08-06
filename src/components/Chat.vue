@@ -38,10 +38,21 @@
         
         <div v-if="isChatStarted">
           <!-- messages v-for  -->
+          <ul>
+            <li class="message" :key="message.id" v-for="message in messages">
+              <div><b>{{ message.from }}</b></div>
+              {{ message.text }}
+            </li>
+          </ul>
         </div>
 
         <b-field id="chatBox" v-if="isChatStarted">
-          <b-input id="chatInput" size="is-medium" placeholder="Type something!"></b-input>
+          <b-input 
+            @keyup.enter="addMessage"
+            v-model="messageText" 
+            id="chatInput" 
+            size="is-medium" 
+            placeholder="Type something!"></b-input>
         </b-field>
 
         <ul v-if="isChatDone">
@@ -87,6 +98,13 @@ export default {
     chats: db.ref('chats')
   },
   computed: {
+    messages() {
+      if (this.currentChatKey) {
+        return this.chats.find(chat => chat['.key'] === this.currentChatKey).messages
+      } else {
+        return []
+      }
+    },
     currentUsersLength() {
       if (this.currentChatKey) {
         return this.chats.find(chat => chat['.key'] === this.currentChatKey).users.length
@@ -114,6 +132,7 @@ export default {
       isChatDone: false,
       waitingDots: '',
       currentChatKey: null,
+      messageText: '',
     }
   },
   watch: {
@@ -150,6 +169,16 @@ export default {
         type: 'is-success',
       })
     },
+    addMessage() {
+      console.log('Adding message')
+      db.ref('chats').child(this.currentChatKey).child('messages').push({
+        from: this.currentUser.name,
+        text: this.messageText,
+        id: Date.now(),
+        // sentTime
+      })
+      this.messageText = ''
+    },
     joinChat() {
       this.isSearching = true
       if (this.chats.length === 0 || this.chats[this.chats.length - 1].users.length === 2) {
@@ -175,7 +204,9 @@ export default {
           ),
           messages: [{
             from: 'Admin',
-            text: 'Welcome to the chat!'
+            text: 'Welcome to the chat!',
+            id: Date.now(),
+            // sentTime: 
           }]
         })
       }
@@ -185,6 +216,10 @@ export default {
 </script>
 
 <style scoped>
+li.message {
+  margin: 15px;
+}
+
 #chatInput {
   border-radius: 0px;
 }
