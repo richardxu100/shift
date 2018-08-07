@@ -6,7 +6,6 @@ import VueRouter from 'vue-router'
 import 'buefy/lib/buefy.css'
 
 import { routes } from './routes'
-import { db } from './utils/firebase'
 import App from './App.vue'
 
 Vue.use(Buefy)

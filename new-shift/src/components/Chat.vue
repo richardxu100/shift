@@ -23,8 +23,11 @@
           <button 
             class="button is-info" 
             v-else 
-            @click="addTime(120)">Add 2:00</button>
+            @click="addTime(60)">Add 1:00</button>
         </div>
+
+        <p v-if="isChatStarted" id="clock">Time left: {{ time }}</p>
+        
       </div>
 
       <div class="vl"></div>
@@ -36,8 +39,7 @@
           Join Chat!
         </h3>
         
-        <div v-if="isChatStarted">
-          <!-- messages v-for  -->
+        <div v-if="isChatStarted && !isChatDone">
           <ul>
             <li class="message" :key="message.id" v-for="message in messages">
               <div><b>{{ message.from }}</b> <span id="timeStamp">{{ message.sentTime }}</span></div>
@@ -46,7 +48,7 @@
           </ul>
         </div>
 
-        <b-field id="chatBox" v-if="isChatStarted">
+        <b-field id="chatBox" v-if="isChatStarted && !isChatDone">
           <b-input 
             @keyup.native.enter="addMessage"
             v-model="messageText" 
@@ -55,7 +57,7 @@
             placeholder="Message"></b-input>
         </b-field>
 
-        <ul v-if="isChatDone">
+        <ul class="surveyQuestions" v-if="isChatDone">
           <li>How open was your chat mate to new ideas?</li>
           <b-input placeholder="Number"
             type="number"
@@ -155,7 +157,7 @@ export default {
   },
   data() {
     return {
-      time: 600,
+      time: 6,
       isSearching: false,
       isChatStarted: false,
       isChatDone: false,
@@ -166,7 +168,17 @@ export default {
   },
   watch: {
     isChatStarted() {
-      setTimeout(() => (this.isChatDone = true), this.time * 1000)
+      if (this.isChatStarted) {
+        
+        const interval = setInterval(() => {
+          this.time -= 1
+          if (this.time <= 0) {
+            window.clearInterval(interval)
+            this.isChatDone = true
+          }
+        }, 1000)
+        // setTimeout(() => (this.isChatDone = true), this.time * 1000)
+      }
     },
     isSearching() {
       setInterval(() => {
@@ -190,11 +202,15 @@ export default {
   },
   methods: {
     addTime(numOfSeconds) {
+      this.$toast.open({
+        type: 'is-success',
+        message: 'Add 1:00 to chat time!'
+      })
       this.time += numOfSeconds
     },
     saveAnswers() {
       this.$toast.open({
-        message: 'Thanks for saving your answers',
+        message: 'Thanks for your help!',
         type: 'is-success',
       })
     },
@@ -249,6 +265,11 @@ export default {
 </script>
 
 <style scoped>
+#clock {
+  margin-top: 20px;
+  font-weight: bold;
+}
+
 #timeStamp {
   color: rgb(113, 112, 112);
   margin-left: 6px;
@@ -305,5 +326,9 @@ li {
 
 button {
   margin-top: 15px;
+}
+
+.surveyQuestions {
+  padding: 20px;
 }
 </style>
