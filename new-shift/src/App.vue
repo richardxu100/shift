@@ -26,18 +26,10 @@ export default {
   },
   firebase: {
     users: db.ref('users'),
-    loggedInUsers: db.ref('loggedInUsers'),
   },
   data() {
     return {
-      currentUser: {
-        name: 'John Doe',
-        email: 'test41@test.com',
-      },
-      // currentUser: {
-      //   name: 'rich2',
-      //   email: 'test51@test.com',
-      // },
+      currentUser: null,
       isLoginModalOpen: false,
     }
   },
@@ -70,7 +62,11 @@ export default {
             message: 'Logged in!',
           })
           this.isLoginModalOpen = false
-          this.currentUser = this.users.find(user => user.email == email)
+          const currentUser = this.users.find(user => user.email == email)
+          this.currentUser = { 
+            email, 
+            name: currentUser.name
+          }
         })
         .catch(error => {
           this.$toast.open({
@@ -80,10 +76,6 @@ export default {
         })
     },
     logout() {
-      this.loggedInUsers = this.loggedInUsers.filter(
-        user => user.email !== this.currentUser.email
-      )
-      this.$firebaseRefs.loggedInUsers.child(this.currentUser['.key']).remove()
       this.currentUser = null
     },
     async signUp({ email, password, name }) {
@@ -99,7 +91,10 @@ export default {
           email,
           name,
         })
-        this.currentUser = this.users.find(user => user.email === email)
+        const currentUser = this.users.find(user => {
+          user.email === email
+        })
+        this.currentUser = { email, name }
         this.isLoginModalOpen = false
         this.$router.push('/setPreferences')
       } catch (error) {

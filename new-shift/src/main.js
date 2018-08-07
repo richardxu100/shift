@@ -6,7 +6,6 @@ import VueRouter from 'vue-router'
 import 'buefy/lib/buefy.css'
 
 import { routes } from './routes'
-import { db } from './utils/firebase'
 import App from './App.vue'
 
 Vue.use(Buefy)
@@ -14,14 +13,10 @@ Vue.use(VueFire)
 Vue.use(VueRouter)
 
 const router = new VueRouter({
-  mode: 'history',
-  routes,
+  routes
 })
 
 new Vue({
-  el: '#app',
   router,
-  render: h => h(App),
-  firebase: {
-  },
-})
+  render: h => h(App)
+}).$mount('#app')

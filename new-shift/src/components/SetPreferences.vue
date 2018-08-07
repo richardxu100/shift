@@ -14,10 +14,10 @@
           Liberal
         </b-radio>
         <b-radio v-model="ideology" native-value="Independent">
-          Independent
+          Neither
         </b-radio>
 
-        <li>I support legislation that reduces the supply of firearms</li>
+        <li>I support legislation that reduces the supply of firearms.</li>
 
         <b-input placeholder="Number"
           type="number"
@@ -26,7 +26,7 @@
           max="5">
         </b-input>
 
-        <li>I support increasing the availability on abortions</li>
+        <li>I support increasing the availability of abortions.</li>
 
         <b-input placeholder="Number"
           type="number"
@@ -44,7 +44,7 @@
           max="5">
         </b-input>
 
-        <li>I support teaching evolution in public schooling.</li>
+        <li>I support teaching evolution in public schools.</li>
 
         <b-input placeholder="Number"
           type="number"
