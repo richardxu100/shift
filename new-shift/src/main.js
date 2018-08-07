@@ -13,7 +13,7 @@ Vue.use(VueFire)
 Vue.use(VueRouter)
 
 const router = new VueRouter({
-  routes,
+  routes
 })
 
 new Vue({
