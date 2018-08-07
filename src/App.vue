@@ -31,7 +31,7 @@ export default {
   data() {
     return {
       currentUser: {
-        name: 'rich2',
+        name: 'John Doe',
         email: 'test41@test.com',
       },
       // currentUser: {
@@ -50,7 +50,7 @@ export default {
     // Testing purposes (new user for chat)
     setDifferentUser() {
       this.currentUser = {
-        name: 'not rich',
+        name: 'Rich Xu',
         email: 'test123@test.com'
       }
     },

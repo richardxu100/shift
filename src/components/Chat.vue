@@ -52,7 +52,7 @@
             v-model="messageText" 
             id="chatInput" 
             size="is-medium" 
-            placeholder="Type something!"></b-input>
+            placeholder="Message"></b-input>
         </b-field>
 
         <ul v-if="isChatDone">
@@ -95,8 +95,15 @@ export default {
       required: true,
     },
   },
+  // created() {
+  //   db.ref('chats').on('value').then(snapshot => {
+  //     console.log('snap val: ', snapshot.val())
+  //   })
+  // },
   firebase: {
-    chats: db.ref('chats')
+    chats: {
+      source: db.ref('chats'),
+    }
   },
   computed: {
     messages() {
@@ -107,7 +114,7 @@ export default {
       }
     },
     currentUsersLength() {
-      if (this.currentChatKey) {
+      if (this.currentChatKey && this.chats) {
         return this.chats.find(chat => chat['.key'] === this.currentChatKey).users.length
       } else {
         return 0
@@ -123,6 +130,27 @@ export default {
       } else {
         return null
       }
+    }
+  },
+  async beforeDestroy() {
+    // Exit if just one person leaves
+    // Destroy whole chat if two people leave
+    const snap = await db.ref('chats').child(this.currentChatKey).once('value')
+    console.log('currentChatKey: ', this.currentChatKey)
+    const chat = snap.val()
+    if (chat.users) {
+      db.ref('chats').child(this.currentChatKey).child('messages').push({
+        from: 'Admin',
+        id: Date.now(),
+        sentTime: moment().format('LT'),
+        text: 'Chat partner has left!'
+      })
+      db.ref('chats').child(this.currentChatKey).set({
+        messages: chat.messages
+      })
+    } else {
+      console.log('One code running')
+      db.ref('chats').child(this.currentChatKey).remove()
     }
   },
   data() {
@@ -235,7 +263,7 @@ input#chatInput {
 
 #chatBox {
   bottom: 0;
-  width: 100%;
+  width: 75%;
   position: fixed;
 }
 
