@@ -2,7 +2,7 @@
 
 > MLH Code Day 2017
 
-![Screen Shot 2018-08-07 at 5.06.19 PM](https://i.imgur.com/IOnjBUp.png)
+![Screen Shot 2018-08-07 at 5.12.07 PM](https://i.imgur.com/HEnSYIF.png)
 
 ## Info 
 * SHIFT is an MLH Code Day project designed to reduce political polarization. 
