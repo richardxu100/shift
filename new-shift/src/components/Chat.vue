@@ -22,7 +22,7 @@
             v-if="!isSearching && !isChatStarted">Join Chat</button>
           <button 
             class="button is-info" 
-            v-else 
+            v-else
             @click="addTime(60)">Add 1:00</button>
         </div>
 
@@ -157,7 +157,7 @@ export default {
   },
   data() {
     return {
-      time: 6,
+      time: 60,
       isSearching: false,
       isChatStarted: false,
       isChatDone: false,
