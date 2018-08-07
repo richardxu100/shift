@@ -58,7 +58,10 @@ module.exports = {
       {
         test: /\.js$/,
         loader: 'babel-loader',
-        exclude: /node_modules/
+        exclude: /node_modules/,
+        query: {
+          presets: ['es2015']
+        }
       },
       {
         test: /\.(png|jpg|gif|svg)$/,
@@ -66,7 +69,15 @@ module.exports = {
         options: {
           name: '[name].[ext]?[hash]'
         }
-      }
+      },
+      // {
+      //   test: /\.es6$/,
+      //   exclude: /node_modules/,
+      //   loader: 'babel',
+      //   query: {
+      //     presets: ['es2015']
+      //   }
+      // }
     ]
   },
   resolve: {
