@@ -48,11 +48,12 @@
 
         <b-field id="chatBox" v-if="isChatStarted">
           <b-input 
-            @keyup.enter="addMessage"
+            @keyup.native.enter="addMessage"
             v-model="messageText" 
             id="chatInput" 
             size="is-medium" 
             placeholder="Type something!"></b-input>
+            <!-- <button class="button" @click="addMessage">Send</button> -->
         </b-field>
 
         <ul v-if="isChatDone">
