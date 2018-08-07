@@ -40,7 +40,7 @@
           <!-- messages v-for  -->
           <ul>
             <li class="message" :key="message.id" v-for="message in messages">
-              <div><b>{{ message.from }}</b></div>
+              <div><b>{{ message.from }}</b> <span id="timeStamp">{{ message.sentTime }}</span></div>
               {{ message.text }}
             </li>
           </ul>
@@ -53,7 +53,6 @@
             id="chatInput" 
             size="is-medium" 
             placeholder="Type something!"></b-input>
-            <!-- <button class="button" @click="addMessage">Send</button> -->
         </b-field>
 
         <ul v-if="isChatDone">
@@ -88,6 +87,7 @@
 <script>
 import { db } from '../utils/firebase'
 import firebase from 'firebase'
+import moment from 'moment'
 
 export default {
   props: {
@@ -176,7 +176,7 @@ export default {
         from: this.currentUser.name,
         text: this.messageText,
         id: Date.now(),
-        // sentTime
+        sentTime: moment().format('LT')
       })
       this.messageText = ''
     },
@@ -207,7 +207,7 @@ export default {
             from: 'Admin',
             text: 'Welcome to the chat!',
             id: Date.now(),
-            // sentTime: 
+            sentTime: moment().format('LT')
           }]
         })
       }
@@ -217,11 +217,15 @@ export default {
 </script>
 
 <style scoped>
+#timeStamp {
+  color: rgb(113, 112, 112);
+}
+
 li.message {
   margin: 15px;
 }
 
-#chatInput {
+input#chatInput {
   border-radius: 0px;
 }
 
